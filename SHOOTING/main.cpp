@@ -12,7 +12,7 @@ const int width = 768, height = 800;
 
 int main()
 {
-	RenderWindow app(VideoMode(width, height), "Shooting");
+	RenderWindow app(VideoMode(width, height), "The Rhombus");
 	app.setFramerateLimit(60);
 	//----Declare/Define Game Objects
 	//-------------------
@@ -40,8 +40,8 @@ int main()
 	//-----------------------
 
 	//----variables
-	const char winMsg[20] = "GAME DONE YOU WIN";
-	const char loseMsg[20] = "GAME DONE YOU LOSE";
+	const char winMsg[20] = "GAME OVER YOU WIN";
+	const char loseMsg[20] = "GAME OVER YOU LOSE";
 	const int MAX_ENEMIES = 6;
 	int enemiesCount = 0;
 
@@ -127,6 +127,7 @@ int main()
 			}
 		}
 
+		//충돌 후 처리
 		for (int i = 0; i < enemiesCount; i++)
 		{
 			//Bullet Collision
@@ -141,7 +142,6 @@ int main()
 						enemies[i].setDead();
 
 						score++;
-						scoreText.setString("SCORE/" + to_string(score));
 					}
 				}
 			}
@@ -152,7 +152,6 @@ int main()
 				if (player.Hurt())
 				{
 					enemies[i].setDead(Color::Yellow);
-					healthText.setString("HEALTH/" + to_string(player.getHealth()));
 				}
 				else
 				{
@@ -173,6 +172,9 @@ int main()
 			app.draw(enemies[i].getInstance());
 
 		app.draw(player.getInstance());
+
+		healthText.setString("HEALTH/" + to_string(player.getHealth()));
+		scoreText.setString("SCORE/" + to_string(score));
 
 		//Draw UIs
 		app.draw(scoreText);
